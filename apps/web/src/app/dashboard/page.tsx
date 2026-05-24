@@ -3,12 +3,12 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, Typography, Card, Avatar } from 'antd'
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Typography, Avatar } from 'antd'
+import { LogoutOutlined } from '@ant-design/icons'
 import type { RootState, AppDispatch } from '../../store'
 import { clearAuth } from '../../store/auth.slice'
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -26,29 +26,38 @@ export default function DashboardPage() {
     router.push('/login')
   }
 
+  const initials = user?.name
+    ? user.name
+        .split(' ')
+        .map((part) => part[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : '?'
+
   return (
     <main className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 px-6 h-14 flex items-center justify-between">
         <Text strong className="text-purple-600">
           SaaS App
         </Text>
-        <Button icon={<LogoutOutlined />} size="small" onClick={handleLogout}>
-          Logout
-        </Button>
+
+        <div className="flex items-center gap-3">
+          <Avatar
+            size={32}
+            className="bg-purple-600 text-white text-sm font-semibold select-none"
+          >
+            {initials}
+          </Avatar>
+          <Text className="text-gray-700">{user?.name}</Text>
+          <Button icon={<LogoutOutlined />} size="small" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
       </header>
 
       <div className="max-w-2xl mx-auto p-8">
-        <Card>
-          <div className="flex items-center gap-4">
-            <Avatar size={56} icon={<UserOutlined />} className="bg-purple-100 text-purple-700" />
-            <div>
-              <Title level={4} className="!mb-0">
-                {user?.name ?? 'Welcome'}
-              </Title>
-              <Text type="secondary">{user?.email}</Text>
-            </div>
-          </div>
-        </Card>
+        <Text type="secondary">{user?.email}</Text>
       </div>
     </main>
   )

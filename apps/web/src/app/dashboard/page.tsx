@@ -57,7 +57,6 @@ export default function DashboardPage() {
       </header>
 
       <div className="max-w-2xl mx-auto p-8">
-        <Text type="secondary">{user?.email}</Text>
       </div>
     </main>
   )

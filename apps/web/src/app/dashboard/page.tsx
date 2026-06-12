@@ -49,7 +49,7 @@ export default function DashboardPage() {
           >
             {initials}
           </Avatar>
-          <Text className="text-gray-700">{user?.name}</Text>
+          <Text className="text-purple-600">{user?.name}</Text>
           <Button icon={<LogoutOutlined />} size="small" onClick={handleLogout}>
             Logout
           </Button>
